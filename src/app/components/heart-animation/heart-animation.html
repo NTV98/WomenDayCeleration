@@ -1,0 +1,11 @@
+<!-- Heart Animation Component -->
+<div class="heart-container">
+  <div 
+    *ngFor="let heart of hearts; trackBy: trackByHeartId"
+    class="heart"
+    [style.left.%]="heart.left"
+    [style.animation-delay.s]="heart.delay"
+    [style.transform]="'scale(' + heart.size + ') rotate(45deg)'"
+    [style.animation-duration]="getRandomDuration() + 's'"
+  ></div>
+</div>

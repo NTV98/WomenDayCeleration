@@ -1,0 +1,75 @@
+<!-- Main Page - Women's Day Celebration -->
+<div class="gradient-bg">
+  <!-- Heart Animation Background -->
+  <app-heart-animation></app-heart-animation>
+  
+  <!-- Main Content -->
+  <div class="main-container">
+    
+    <!-- Main Title Section -->
+    <div class="main-title fade-in-up">
+      <!-- Decorative hearts around title -->
+      <div class="title-decoration">
+        <span>💖</span>
+        <h1 class="title-text">
+          Chúc Mừng Ngày Phụ Nữ Việt Nam
+        </h1>
+        <span>💖</span>
+      </div>
+      
+      <!-- Date -->
+      <div class="date-text">
+        20/10
+      </div>
+      
+      <!-- Subtitle -->
+      <p class="subtitle">
+        Gửi lời yêu thương đến những người phụ nữ tuyệt vời nhất 💖
+      </p>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="decorative-elements scale-in">
+      <span>🌸</span>
+      <span>✨</span>
+      <span>💕</span>
+      <span>🌺</span>
+      <span>💝</span>
+    </div>
+
+    <!-- Action Button -->
+    <div class="button-container scale-in">
+      <button 
+        (click)="showMessagePopup()"
+        class="action-button"
+      >
+        <!-- Button glow effect -->
+        <div class="button-glow"></div>
+        
+        <!-- Button content -->
+        <span class="button-content">
+          <span>Gửi Lời Chúc</span>
+          <span>💝</span>
+        </span>
+      </button>
+      
+      <!-- Button description -->
+      <p class="button-description">
+        Nhấn để nhận lời chúc đặc biệt ✨
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer fade-in-up">
+      <p class="footer-text">
+        Made with 💖 for Vietnamese Women's Day
+      </p>
+    </div>
+  </div>
+
+  <!-- Message Popup -->
+  <app-message-popup 
+    [isVisible]="showPopup"
+    (closePopup)="closeMessagePopup()"
+  ></app-message-popup>
+</div>

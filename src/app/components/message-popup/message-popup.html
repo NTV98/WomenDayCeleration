@@ -1,0 +1,50 @@
+<!-- Message Popup Component -->
+<div 
+  *ngIf="isVisible" 
+  class="popup-overlay"
+  (click)="onClose()"
+>
+  <div 
+    class="popup-content"
+    [@popupAnimation]="isVisible ? 'visible' : 'hidden'"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Close button -->
+    <button 
+      (click)="onClose()"
+      class="popup-close"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Message content -->
+    <div class="popup-body">
+      <!-- Heart icon -->
+      <div class="popup-icon">
+        <span>💖</span>
+      </div>
+      
+      <!-- Message text -->
+      <p class="popup-message">
+        {{ currentMessage }}
+      </p>
+      
+      <!-- Decorative elements -->
+      <div class="popup-decorations">
+        <span>🌸</span>
+        <span>✨</span>
+        <span>💕</span>
+      </div>
+      
+      <!-- Close button -->
+      <button 
+        (click)="onClose()"
+        class="popup-button"
+      >
+        Cảm ơn bạn! 💝
+      </button>
+    </div>
+  </div>
+</div>
