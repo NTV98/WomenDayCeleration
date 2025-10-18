@@ -21,21 +21,40 @@
 
     <!-- Message content -->
     <div class="popup-body">
-      <!-- Heart icon -->
-      <div class="popup-icon">
-        <span>💖</span>
+      <!-- Header with name -->
+      <div class="popup-header">
+        <div class="popup-icon">
+          <span>💖</span>
+        </div>
+        <h2 class="popup-name">Gửi đến Nhật Linh</h2>
+      </div>
+      
+      <!-- Image section -->
+      <div class="popup-image-container">
+        <img 
+          [src]="currentImage" 
+          [alt]="'Hình ảnh chúc mừng cho Nhật Linh'"
+          class="popup-image"
+        />
+        <div class="image-overlay">
+          <span class="image-heart">💕</span>
+        </div>
       </div>
       
       <!-- Message text -->
-      <p class="popup-message">
-        {{ currentMessage }}
-      </p>
+      <div class="popup-message-container">
+        <p class="popup-message">
+          {{ currentMessage }}
+        </p>
+      </div>
       
       <!-- Decorative elements -->
       <div class="popup-decorations">
         <span>🌸</span>
         <span>✨</span>
         <span>💕</span>
+        <span>🌺</span>
+        <span>💝</span>
       </div>
       
       <!-- Close button -->
@@ -43,7 +62,7 @@
         (click)="onClose()"
         class="popup-button"
       >
-        Cảm ơn bạn! 💝
+        Cảm ơn anh! 💝
       </button>
     </div>
   </div>
