@@ -21,34 +21,30 @@
 
     <!-- Message content -->
     <div class="popup-body">
-      <!-- Header with name -->
-      <div class="popup-header">
-        <div class="popup-icon">
-          <span>💖</span>
-        </div>
-        <h2 class="popup-name">Gửi đến Nhật Linh</h2>
-        <!-- Step indicator -->
-        <div class="step-indicator">
-          <span 
-            *ngFor="let step of steps; let i = index"
-            class="step-dot"
-            [class.active]="i === currentStep"
-            [class.completed]="i < currentStep"
-          ></span>
-        </div>
-      </div>
+
       
       <!-- Step Content Container -->
       <div class="step-container">
         
         <!-- Step 1: Welcome -->
         <div *ngIf="currentStep === 0" class="step-content welcome-step">
-          <div class="step-icon">🎉</div>
-          <h3 class="step-title">Chào mừng em đến với ngày đặc biệt!</h3>
-          <p class="step-description">
-            Hôm nay là ngày 20/10 - Ngày Phụ Nữ Việt Nam. 
-            Anh đã chuẩn bị một món quà đặc biệt cho em! 💖
-          </p>
+
+          <div class="step-header">
+            <div class="popup-icon">
+              <span>💖</span>
+            </div>
+            <h2 class="popup-name">Gửi đến Nhật Linh</h2>
+          </div>
+          <div class="step-body">
+            <div class="step-icon">🎉</div>
+            <h3 class="step-title">Chào mừng em đến với ngày đặc biệt!</h3>
+            <p class="step-description">
+              Hôm nay là ngày 20/10 - Ngày Phụ Nữ Việt Nam. 
+              Anh đã chuẩn bị một món quà đặc biệt cho em! 💖
+            </p>
+          </div>
+  
+
         </div>
         
         <!-- Step 2: Slideshow -->
@@ -154,7 +150,7 @@
           (click)="onClose()"
           class="nav-button finish-btn"
         >
-          Cảm ơn anh! 💝
+          Cuối gòi nè! 💝
         </button>
       </div>
       
