@@ -88,11 +88,10 @@
         <div *ngIf="currentStep === 2" class="step-content message-step">
           <div class="step-icon">💌</div>
           <h3 class="step-title">Lời chúc từ trái tim anh</h3>
-          <div class="popup-message-container">
-            <p class="popup-message">
-              {{ currentMessage }}
-            </p>
-          </div>
+          <p class="step-description">
+            Hôm nay là ngày 20/10 - Ngày Phụ Nữ Việt Nam. 
+            Anh đã chuẩn bị một món quà đặc biệt cho em! 💖
+          </p>
         </div>
         
         <!-- Step 4: Memories -->
@@ -127,40 +126,43 @@
         
       </div>
       
-      <!-- Navigation Buttons -->
-      <div class="step-navigation">
-        <button 
-          *ngIf="currentStep > 0"
-          (click)="previousStep()"
-          class="nav-button prev-step-btn"
-        >
-          ❮ Trước
-        </button>
+      <!-- Navigation and Decorations Combined -->
+      <div class="nav-decorations-container">
+        <!-- Navigation Buttons -->
+        <div class="step-navigation">
+          <button 
+            *ngIf="currentStep > 0"
+            (click)="previousStep()"
+            class="nav-button prev-step-btn"
+          >
+            ❮ Trước
+          </button>
+          
+          <button 
+            *ngIf="currentStep < steps.length - 1"
+            (click)="nextStep()"
+            class="nav-button next-step-btn"
+          >
+            Tiếp ❯
+          </button>
+          
+          <button 
+            *ngIf="currentStep === steps.length - 1"
+            (click)="onClose()"
+            class="nav-button finish-btn"
+          >
+            Cuối gòi nè! 💝
+          </button>
+        </div>
         
-        <button 
-          *ngIf="currentStep < steps.length - 1"
-          (click)="nextStep()"
-          class="nav-button next-step-btn"
-        >
-          Tiếp ❯
-        </button>
-        
-        <button 
-          *ngIf="currentStep === steps.length - 1"
-          (click)="onClose()"
-          class="nav-button finish-btn"
-        >
-          Cuối gòi nè! 💝
-        </button>
-      </div>
-      
-      <!-- Decorative elements -->
-      <div class="popup-decorations">
-        <span>🌸</span>
-        <span>✨</span>
-        <span>💕</span>
-        <span>🌺</span>
-        <span>💝</span>
+        <!-- Decorative elements -->
+        <div class="popup-decorations">
+          <span>🌸</span>
+          <span>✨</span>
+          <span>💕</span>
+          <span>🌺</span>
+          <span>💝</span>
+        </div>
       </div>
     </div>
   </div>
