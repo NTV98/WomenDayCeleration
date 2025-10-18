@@ -26,6 +26,7 @@
   border: 3px solid #ff6b9d;
   display: flex;
   flex-direction: column;
+  margin: 20px;
 }
 
 .popup-close {
@@ -587,7 +588,9 @@
 
 @media (max-width: 480px) {
   .popup-content {
-    max-width: 400px;
+    max-width: calc(100vw - 20px);
+    width: 95%;
+    margin: 10px;
   }
   
   .step-container {
@@ -615,17 +618,18 @@
   }
   
   .prev-btn, .next-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 0.9rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+    z-index: 20;
   }
   
   .prev-btn {
-    left: 5px;
+    left: 10px;
   }
   
   .next-btn {
-    right: 5px;
+    right: 10px;
   }
   
   .slideshow-dots {
