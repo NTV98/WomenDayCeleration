@@ -1,0 +1,71 @@
+<!-- Heart Page Component -->
+<div class="heart-page-container" [class.modal-mode]="isModal">
+  <!-- Background particles -->
+  <div class="particles-container">
+    <div 
+      *ngFor="let particle of particles; trackBy: trackByParticleId"
+      class="particle"
+      [style.left.%]="particle.left"
+      [style.top.%]="particle.top"
+      [style.width.px]="particle.size"
+      [style.height.px]="particle.size"
+      [style.animation-delay.s]="particle.delay"
+      [@particles]="'visible'"
+    ></div>
+  </div>
+
+  <!-- Main content -->
+  <div class="heart-content">
+    <!-- Main heart -->
+    <div class="main-heart-container">
+      <div 
+        class="main-heart"
+        [@heartBeat]="heartState"
+        [@heartPulse]="pulseState"
+      >
+        <div class="heart-shape">
+          <div class="heart-left"></div>
+          <div class="heart-right"></div>
+          <div class="heart-bottom"></div>
+        </div>
+        <div class="heart-glow"></div>
+      </div>
+    </div>
+
+    <!-- Floating hearts -->
+    <div class="floating-hearts">
+      <div 
+        *ngFor="let heart of floatingHearts; trackBy: trackByHeartId"
+        class="floating-heart"
+        [style.left.%]="heart.left"
+        [style.animation-delay.s]="heart.delay"
+        [style.animation-duration.s]="heart.duration"
+        [@floatingHearts]="heart.state"
+      >
+        {{ heart.emoji }}
+      </div>
+    </div>
+
+    <!-- Text content -->
+    <div class="text-content" [@textFadeIn]="textVisible ? 'visible' : 'hidden'">
+      <h1 class="main-title" data-text="💖 Chúc mừng em! 💖">💖 Chúc mừng em! 💖</h1>
+      <p class="subtitle">Nhật Linh à, em là tình yêu của anh!</p>
+      <p class="message">
+        Trái tim anh luôn dành cho em, 
+        <br>và sẽ mãi mãi như vậy! 💕
+      </p>
+    </div>
+
+    <!-- Back button -->
+    <button 
+      class="back-button"
+      (click)="goBack()"
+      [@textFadeIn]="textVisible ? 'visible' : 'hidden'"
+    >
+      <span>{{ isModal ? '✕ Đóng' : '← Quay lại' }}</span>
+    </button>
+  </div>
+
+  <!-- Background gradient -->
+  <div class="background-gradient"></div>
+</div>

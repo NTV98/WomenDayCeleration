@@ -1,0 +1,27 @@
+<!-- Simple Heart Page - Chỉ hiển thị trái tim lớn với text -->
+<div class="simple-heart-container">
+  <!-- Background particles -->
+  <div class="particles-container">
+    <div 
+      *ngFor="let particle of particles; trackBy: trackByParticleId"
+      class="particle"
+      [style.left.%]="particle.left"
+      [style.top.%]="particle.top"
+      [style.width.px]="particle.size"
+      [style.height.px]="particle.size"
+      [style.animation-delay.s]="particle.delay"
+      [style.opacity]="particle.opacity"
+    ></div>
+  </div>
+
+  <!-- Main heart with text -->
+  <div class="heart-with-text">
+    <div class="heart-shape">
+      <div class="heart-left"></div>
+      <div class="heart-right"></div>
+      <div class="heart-bottom"></div>
+    </div>
+    <div class="heart-text">Anh Yêu Em</div>
+    <div class="heart-glow"></div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./heart-animation.css']
 })
 export class HeartAnimationComponent implements OnInit, OnDestroy {
-  hearts: Array<{id: number, left: number, delay: number, size: number}> = [];
+  hearts: Array<{id: number, left: number, delay: number, size: number, duration: number}> = [];
   private heartInterval: any;
 
   ngOnInit() {
@@ -40,15 +40,16 @@ export class HeartAnimationComponent implements OnInit, OnDestroy {
       id: Date.now() + Math.random(),
       left: Math.random() * 100, // Vị trí ngang ngẫu nhiên (0-100%)
       delay: Math.random() * 2, // Độ trễ ngẫu nhiên (0-2s)
-      size: Math.random() * 0.5 + 0.5 // Kích thước ngẫu nhiên (0.5-1.0)
+      size: Math.random() * 0.5 + 0.5, // Kích thước ngẫu nhiên (0.5-1.0)
+      duration: 6 + Math.random() * 2 // Thời gian animation ngẫu nhiên (6-8s)
     };
     
     this.hearts.push(heart);
     
-    // Xóa trái tim sau 6 giây để tránh memory leak
+    // Xóa trái tim sau 8 giây để tránh memory leak
     setTimeout(() => {
       this.hearts = this.hearts.filter(h => h.id !== heart.id);
-    }, 6000);
+    }, 8000);
   }
 
   /**
@@ -56,12 +57,5 @@ export class HeartAnimationComponent implements OnInit, OnDestroy {
    */
   trackByHeartId(index: number, heart: any): number {
     return heart.id;
-  }
-
-  /**
-   * Lấy thời gian animation ngẫu nhiên
-   */
-  getRandomDuration(): number {
-    return 6 + Math.random() * 2;
   }
 }

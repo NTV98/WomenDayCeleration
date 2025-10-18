@@ -1,5 +1,5 @@
-<!-- Main Page - Women's Day Celebration -->
-<div class="gradient-bg">
+<!-- Main Page - Women's Day Celebration (only show when on home route) -->
+<div class="gradient-bg" *ngIf="isHomePage()">
   <!-- Heart Animation Background -->
   <app-heart-animation></app-heart-animation>
   
@@ -37,7 +37,7 @@
       <span>💝</span>
     </div>
 
-    <!-- Action Button -->
+    <!-- Action Buttons -->
     <div class="button-container scale-in">
       <button 
         (click)="showMessagePopup()"
@@ -52,10 +52,38 @@
           <span>💝</span>
         </span>
       </button>
+
+      <button 
+        (click)="showHeartModalPopup()"
+        class="action-button heart-button"
+      >
+        <!-- Button glow effect -->
+        <div class="button-glow"></div>
+        
+        <!-- Button content -->
+        <span class="button-content">
+          <span>Xem Trái Tim</span>
+          <span>💖</span>
+        </span>
+      </button>
+
+      <button 
+        (click)="goToSimpleHeart()"
+        class="action-button simple-heart-button"
+      >
+        <!-- Button glow effect -->
+        <div class="button-glow"></div>
+        
+        <!-- Button content -->
+        <span class="button-content">
+          <span>Trái Tim Đơn Giản</span>
+          <span>❤️</span>
+        </span>
+      </button>
       
       <!-- Button description -->
       <p class="button-description">
-        Nhấn để nhận lời chúc đặc biệt ✨
+        Nhấn để nhận lời chúc đặc biệt hoặc xem trái tim ✨
       </p>
     </div>
 
@@ -73,3 +101,16 @@
     (closePopup)="closeMessagePopup()"
   ></app-message-popup>
 </div>
+
+<!-- Heart Modal -->
+<div class="heart-modal-overlay" *ngIf="showHeartModal" (click)="closeHeartModal()">
+  <div class="heart-modal-content" (click)="$event.stopPropagation()">
+    <app-heart-page 
+      [isModal]="true"
+      (closeModal)="closeHeartModal()"
+    ></app-heart-page>
+  </div>
+</div>
+
+<!-- Router Outlet for different pages -->
+<router-outlet></router-outlet>

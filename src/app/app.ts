@@ -1,13 +1,15 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { HeartAnimationComponent } from './components/heart-animation/heart-animation';
 import { MessagePopupComponent } from './components/message-popup/message-popup';
+import { HeartPageComponent } from './components/heart-page/heart-page';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, HeartAnimationComponent, MessagePopupComponent],
+  imports: [CommonModule, RouterModule, HeartAnimationComponent, MessagePopupComponent, HeartPageComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
   animations: [
@@ -39,7 +41,10 @@ export class App implements OnInit {
   protected readonly title = signal('women-day-celebration');
   
   showPopup: boolean = false;
+  showHeartModal: boolean = false;
   isContentVisible: boolean = false;
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     // Hiển thị nội dung sau một chút delay để tạo hiệu ứng
@@ -60,5 +65,40 @@ export class App implements OnInit {
    */
   closeMessagePopup() {
     this.showPopup = false;
+  }
+
+  /**
+   * Hiển thị heart modal
+   */
+  showHeartModalPopup() {
+    this.showHeartModal = true;
+  }
+
+  /**
+   * Đóng heart modal
+   */
+  closeHeartModal() {
+    this.showHeartModal = false;
+  }
+
+  /**
+   * Kiểm tra xem có đang ở trang heart không
+   */
+  isHeartPage(): boolean {
+    return this.router.url === '/heart';
+  }
+
+  /**
+   * Kiểm tra xem có đang ở trang home không
+   */
+  isHomePage(): boolean {
+    return this.router.url === '/home' || this.router.url === '/';
+  }
+
+  /**
+   * Điều hướng đến trang trái tim đơn giản
+   */
+  goToSimpleHeart() {
+    this.router.navigate(['/simple-heart']);
   }
 }

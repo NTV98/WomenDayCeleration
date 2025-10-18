@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -26,6 +27,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class MessagePopupComponent implements OnInit, OnDestroy {
   @Input() isVisible: boolean = false;
   @Output() closePopup = new EventEmitter<void>();
+
+  constructor(private router: Router) {}
 
   // Danh sách các lời chúc đặc biệt cho Nhật Linh
   private messages: string[] = [
@@ -161,6 +164,17 @@ export class MessagePopupComponent implements OnInit, OnDestroy {
     this.currentSlideIndex = 0;
     setTimeout(() => {
       this.closePopup.emit();
+    }, 300);
+  }
+
+  /**
+   * Chuyển đến trang heart khi nhấn nút cuối
+   */
+  goToHeartPage() {
+    this.stopAutoSlide();
+    this.isVisible = false;
+    setTimeout(() => {
+      this.router.navigate(['/heart']);
     }, 300);
   }
 
