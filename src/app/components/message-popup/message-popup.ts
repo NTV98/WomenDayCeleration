@@ -88,24 +88,9 @@ export class MessagePopupComponent implements OnInit, OnDestroy {
       description: 'Khoảnh khắc anh nhìn thấy em lần đầu tiên, trái tim anh đã rung động...'
     },
     {
-      icon: '🌹',
-      title: 'Ngày hẹn hò đầu tiên',
-      description: 'Buổi hẹn hò đầu tiên của chúng ta, anh vẫn nhớ từng chi tiết nhỏ...'
-    },
-    {
-      icon: '🎂',
-      title: 'Sinh nhật em',
-      description: 'Ngày sinh nhật em, anh đã chuẩn bị một bất ngờ đặc biệt...'
-    },
-    {
       icon: '🌙',
       title: 'Những đêm trò chuyện',
       description: 'Những đêm chúng ta trò chuyện đến tận khuya, chia sẻ mọi thứ...'
-    },
-    {
-      icon: '🏖️',
-      title: 'Chuyến du lịch cùng nhau',
-      description: 'Chuyến du lịch đầu tiên của chúng ta, những kỉ niệm không thể quên...'
     },
     {
       icon: '💍',
