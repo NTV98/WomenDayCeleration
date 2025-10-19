@@ -174,6 +174,9 @@ export class MessagePopupComponent implements OnInit, OnDestroy {
   goToHeartPage() {
     this.stopAutoSlide();
     this.isVisible = false;
+    // Reset về step đầu tiên
+    this.currentStep = 0;
+    this.currentSlideIndex = 0;
     this.openHeartTVNLModal.emit();
   }
 
