@@ -108,4 +108,11 @@ export class App implements OnInit {
   goToHeartNL() {
     this.router.navigate(['/heart-nl']);
   }
+
+  /**
+   * Điều hướng đến trang trái tim TV NL
+   */
+  goToHeartTVNL() {
+    this.router.navigate(['/heart-tv-nl']);
+  }
 }

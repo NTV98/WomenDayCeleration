@@ -1,25 +1,15 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-/**
- * HeartAnimationNLComponent - Component hiển thị hiệu ứng trái tim động bằng Canvas
- * 
- * Ý tưởng tạo hình trái tim:
- * - Sử dụng Canvas 2D để vẽ trái tim với mathematical heart curve
- * - Tạo hệ thống particle physics với velocity, acceleration
- * - Sử dụng radial gradients và blur effects cho glow
- * - Animation frame loop để tạo chuyển động mượt mà
- * - Interactive effects với mouse movement
- */
 @Component({
-  selector: 'app-heart-animation-nl',
+  selector: 'app-heart-animation-tv-nl',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './heart-animation-nl.component.html',
-  styleUrls: ['./heart-animation-nl.component.css']
+  templateUrl: './heart-animation-tv-nl.component.html',
+  styleUrls: ['./heart-animation-tv-nl.component.css']
 })
-export class HeartAnimationNLComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('heartCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   
   private canvas!: HTMLCanvasElement;
@@ -35,12 +25,42 @@ export class HeartAnimationNLComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnInit() {
     this.startTextAnimation();
+    this.forceFullscreen();
+  }
+
+  /**
+   * Force fullscreen và loại bỏ scrollbars
+   */
+  private forceFullscreen() {
+    // Loại bỏ scrollbars
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    // Đảm bảo body và html không có margin/padding
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+    document.documentElement.style.margin = '0';
+    document.documentElement.style.padding = '0';
+    
+    // Set viewport meta tag nếu chưa có
+    let viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) {
+      viewport = document.createElement('meta');
+      viewport.setAttribute('name', 'viewport');
+      document.head.appendChild(viewport);
+    }
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
   }
 
   ngAfterViewInit() {
     this.initCanvas();
     this.createParticles();
     this.startAnimation();
+    
+    // Force resize after a short delay to ensure DOM is ready
+    setTimeout(() => {
+      this.resizeCanvas();
+    }, 100);
     
     // Hide loading animation
     setTimeout(() => {
@@ -73,10 +93,23 @@ export class HeartAnimationNLComponent implements OnInit, OnDestroy, AfterViewIn
    * Resize canvas theo kích thước màn hình
    */
   private resizeCanvas() {
-    const rect = this.canvas.getBoundingClientRect();
-    this.canvas.width = rect.width * window.devicePixelRatio;
-    this.canvas.height = rect.height * window.devicePixelRatio;
-    this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    // Sử dụng window dimensions thay vì getBoundingClientRect
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    
+    // Set canvas size
+    this.canvas.width = width * dpr;
+    this.canvas.height = height * dpr;
+    
+    // Scale context
+    this.ctx.scale(dpr, dpr);
+    
+    // Set CSS size để đảm bảo canvas phủ toàn bộ viewport
+    this.canvas.style.width = width + 'px';
+    this.canvas.style.height = height + 'px';
+    
+    console.log('Canvas resized:', { width, height, dpr, canvasWidth: this.canvas.width, canvasHeight: this.canvas.height });
   }
 
   /**
@@ -132,13 +165,13 @@ export class HeartAnimationNLComponent implements OnInit, OnDestroy, AfterViewIn
    * Vẽ lên Canvas
    */
   private draw() {
-    // Clear canvas
-    this.ctx.fillStyle = '#000000';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // Clear canvas với background gradient
+    this.drawBackground();
 
     const centerX = this.canvas.width / 2;
     const centerY = this.canvas.height / 2;
-    const heartSize = Math.min(this.canvas.width, this.canvas.height) * 0.4;
+    // Giảm kích thước trái tim để phù hợp với glow layers lớn hơn
+    const heartSize = Math.min(this.canvas.width, this.canvas.height) * 0.25;
 
     // Vẽ glow layers
     this.drawGlowLayers(centerX, centerY, heartSize);
@@ -154,12 +187,48 @@ export class HeartAnimationNLComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   /**
-   * Vẽ các lớp glow
+   * Vẽ background gradient để đảm bảo không có vùng tối
+   */
+  private drawBackground() {
+    // Đảm bảo canvas được fill toàn bộ
+    const canvasWidth = this.canvas.width / (window.devicePixelRatio || 1);
+    const canvasHeight = this.canvas.height / (window.devicePixelRatio || 1);
+    
+    const gradient = this.ctx.createRadialGradient(
+      canvasWidth / 2, canvasHeight / 2, 0,
+      canvasWidth / 2, canvasHeight / 2, Math.max(canvasWidth, canvasHeight)
+    );
+    gradient.addColorStop(0, '#2d0a2d');
+    gradient.addColorStop(0.3, '#1a0a1a');
+    gradient.addColorStop(0.6, '#0a0a0a');
+    gradient.addColorStop(1, '#000000');
+    
+    this.ctx.fillStyle = gradient;
+    this.ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    // Debug: vẽ border để kiểm tra canvas size
+    this.ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+    this.ctx.lineWidth = 2;
+    this.ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
+  }
+
+  /**
+   * Vẽ các lớp glow - phủ toàn bộ màn hình
    */
   private drawGlowLayers(centerX: number, centerY: number, heartSize: number) {
-    const glowSizes = [heartSize * 1.8, heartSize * 2.5, heartSize * 3.2, heartSize * 4];
-    const glowOpacities = [0.4, 0.3, 0.2, 0.1];
-    const pulseFactor = 1 + Math.sin(this.time * 2) * 0.1;
+    const canvasWidth = this.canvas.width;
+    const canvasHeight = this.canvas.height;
+    const maxDimension = Math.max(canvasWidth, canvasHeight);
+    
+    // Tạo glow layers lớn hơn để phủ toàn bộ màn hình
+    const glowSizes = [
+      maxDimension * 0.8,   // 80% màn hình
+      maxDimension * 1.2,    // 120% màn hình  
+      maxDimension * 1.6,    // 160% màn hình
+      maxDimension * 2.0     // 200% màn hình
+    ];
+    const glowOpacities = [0.3, 0.2, 0.15, 0.1];
+    const pulseFactor = 1 + Math.sin(this.time * 2) * 0.05;
 
     glowSizes.forEach((size, index) => {
       const gradient = this.ctx.createRadialGradient(
@@ -167,9 +236,11 @@ export class HeartAnimationNLComponent implements OnInit, OnDestroy, AfterViewIn
         centerX, centerY, size * pulseFactor
       );
       gradient.addColorStop(0, `rgba(255, 105, 180, ${glowOpacities[index]})`);
-      gradient.addColorStop(0.3, `rgba(255, 20, 147, ${glowOpacities[index] * 0.8})`);
-      gradient.addColorStop(0.6, `rgba(220, 20, 60, ${glowOpacities[index] * 0.6})`);
-      gradient.addColorStop(1, 'rgba(255, 105, 180, 0)');
+      gradient.addColorStop(0.2, `rgba(255, 20, 147, ${glowOpacities[index] * 0.9})`);
+      gradient.addColorStop(0.4, `rgba(220, 20, 60, ${glowOpacities[index] * 0.7})`);
+      gradient.addColorStop(0.6, `rgba(139, 0, 0, ${glowOpacities[index] * 0.5})`);
+      gradient.addColorStop(0.8, `rgba(75, 0, 0, ${glowOpacities[index] * 0.3})`);
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       this.ctx.fillStyle = gradient;
       this.ctx.beginPath();

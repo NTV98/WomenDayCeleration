@@ -104,3 +104,17 @@
 .heart-nl-button .button-glow {
   background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(255, 20, 147, 0.3));
 }
+
+.heart-tv-nl-button {
+  background: linear-gradient(135deg, #ff4081, #e91e63, #ad1457);
+  box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+}
+
+.heart-tv-nl-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 64, 129, 0.6);
+}
+
+.heart-tv-nl-button .button-glow {
+  background: linear-gradient(135deg, rgba(255, 64, 129, 0.3), rgba(233, 30, 99, 0.3));
+}

@@ -1,4 +1,13 @@
-/* Heart Animation NL Component with Canvas */
+/* Heart Animation TV NL Component with Canvas */
+
+/* Reset body and html margins */
+:host {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
 .heart-animation-container {
   position: fixed;
@@ -6,12 +15,15 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(ellipse at center, #1a0a1a 0%, #000000 70%);
+  background: radial-gradient(ellipse at center, #2d0a2d 0%, #1a0a1a 30%, #0a0a0a 70%, #000000 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   z-index: 1000;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Canvas styling */
@@ -19,9 +31,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw !important;
+  height: 100vh !important;
   cursor: crosshair;
+  display: block;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Back button */
