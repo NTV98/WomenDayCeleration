@@ -71,6 +71,7 @@ export class App implements OnInit {
    * Hiển thị heart TV NL modal fullscreen
    */
   showHeartTVNLModalPopup() {
+    this.showPopup = false;
     this.showHeartTVNLModal = true;
   }
 
