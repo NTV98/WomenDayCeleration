@@ -68,53 +68,61 @@
   box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
 }
 
-/* Text overlay */
+/* Text overlay - đặt chính giữa màn hình (bên trong trái tim) */
 .heart-text-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ff69b4;
+  color: #ffffff !important;
   font-family: 'Arial', sans-serif;
-  font-size: 48px;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 700;
   text-align: center;
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
   text-shadow: 
-    0 0 15px #ff69b4, 
-    0 0 30px #ff1493, 
-    0 0 45px #dc143c,
-    0 0 60px rgba(255, 20, 147, 0.8),
-    0 0 75px rgba(220, 20, 60, 0.6);
+    0 0 10px #ff69b4, 
+    0 0 20px #ff1493, 
+    0 0 30px #dc143c,
+    0 0 40px rgba(255, 20, 147, 0.9),
+    0 0 50px rgba(220, 20, 60, 0.8);
   z-index: 100;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   pointer-events: none;
   animation: textGlow 2s ease-in-out infinite, textPulse 4s ease-in-out infinite;
+  line-height: 1.2;
+  width: auto;
+  height: auto;
 }
 
 .heart-text-overlay.show {
-  opacity: 1;
+  opacity: 1 !important;
+}
+
+/* Force text to be visible for debugging */
+.heart-text-overlay {
+  opacity: 1 !important;
 }
 
 @keyframes textGlow {
   0%, 100% {
     text-shadow: 
-      0 0 15px #ff69b4, 
-      0 0 30px #ff1493, 
-      0 0 45px #dc143c,
-      0 0 60px rgba(255, 20, 147, 0.8),
-      0 0 75px rgba(220, 20, 60, 0.6);
+      0 0 10px #ff69b4, 
+      0 0 20px #ff1493, 
+      0 0 30px #dc143c,
+      0 0 40px rgba(255, 20, 147, 0.9),
+      0 0 50px rgba(220, 20, 60, 0.8);
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
     text-shadow: 
-      0 0 25px #ff69b4, 
-      0 0 40px #ff1493, 
-      0 0 55px #dc143c,
-      0 0 70px rgba(255, 20, 147, 1),
-      0 0 85px rgba(220, 20, 60, 0.8);
-    transform: translate(-50%, -50%) scale(1.08);
+      0 0 15px #ff69b4, 
+      0 0 25px #ff1493, 
+      0 0 35px #dc143c,
+      0 0 45px rgba(255, 20, 147, 1),
+      0 0 55px rgba(220, 20, 60, 0.9);
+    transform: translate(-50%, -50%) scale(1.05);
   }
 }
 
@@ -130,8 +138,8 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .heart-text-overlay {
-    font-size: 36px;
-    letter-spacing: 2px;
+    font-size: 28px;
+    letter-spacing: 1.5px;
   }
   
   .back-button {
@@ -144,7 +152,7 @@
 
 @media (max-width: 480px) {
   .heart-text-overlay {
-    font-size: 28px;
+    font-size: 22px;
     letter-spacing: 1px;
   }
   

@@ -59,7 +59,7 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     
     // Force resize after a short delay to ensure DOM is ready
     setTimeout(() => {
-      this.resizeCanvas();
+    this.resizeCanvas();
     }, 100);
     
     // Hide loading animation
@@ -73,7 +73,7 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnDestroy() {
     if (this.animationId) {
-      cancelAnimationFrame(this.animationId);
+    cancelAnimationFrame(this.animationId);
     }
   }
 
@@ -168,10 +168,11 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     // Clear canvas với background gradient
     this.drawBackground();
 
+    // Căn trái tim chính giữa màn hình
     const centerX = this.canvas.width / 2;
     const centerY = this.canvas.height / 2;
-    // Giảm kích thước trái tim để phù hợp với glow layers lớn hơn
-    const heartSize = Math.min(this.canvas.width, this.canvas.height) * 0.25;
+    // Tăng kích thước trái tim để chữ có thể nằm bên trong
+    const heartSize = Math.min(this.canvas.width, this.canvas.height) * 0.35;
 
     // Vẽ glow layers
     this.drawGlowLayers(centerX, centerY, heartSize);
@@ -205,11 +206,6 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     
     this.ctx.fillStyle = gradient;
     this.ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-    
-    // Debug: vẽ border để kiểm tra canvas size
-    this.ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-    this.ctx.lineWidth = 2;
-    this.ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
   }
 
   /**
@@ -346,8 +342,10 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
    * Bắt đầu animation cho text
    */
   private startTextAnimation() {
+    console.log('Starting text animation...');
     setTimeout(() => {
       this.showText = true;
+      console.log('Text should be visible now');
     }, 1000);
 
     setInterval(() => {
