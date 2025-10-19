@@ -1,11 +1,10 @@
 <!-- Main Page - Women's Day Celebration (only show when on home route) -->
 <div class="gradient-bg" *ngIf="isHomePage()">
-  <!-- Heart Animation Background -->
-  <app-heart-animation></app-heart-animation>
-  
+
+
   <!-- Main Content -->
   <div class="main-container">
-    
+
     <!-- Main Title Section -->
     <div class="main-title fade-in-up">
       <!-- Decorative hearts around title -->
@@ -16,12 +15,12 @@
         </h1>
         <span>💖</span>
       </div>
-      
+
       <!-- Date -->
       <div class="date-text">
         20/10
       </div>
-      
+
       <!-- Subtitle -->
       <p class="subtitle">
         Gửi lời yêu thương đến những người phụ nữ tuyệt vời nhất 💖
@@ -39,59 +38,17 @@
 
     <!-- Action Buttons -->
     <div class="button-container scale-in">
-      <button 
-        (click)="showMessagePopup()"
-        class="action-button"
-      >
+      <button (click)="showMessagePopup()" class="action-button">
         <!-- Button glow effect -->
         <div class="button-glow"></div>
-        
+
         <!-- Button content -->
         <span class="button-content">
-          <span>Gửi Lời Chúc</span>
+          <span>Nhấn vào đây nhen cục cưng</span>
           <span>💝</span>
         </span>
       </button>
-
-      <button 
-        (click)="showHeartModalPopup()"
-        class="action-button heart-button"
-      >
-        <div class="button-glow"></div>
-        
-        <span class="button-content">
-          <span>Xem Trái Tim</span>
-          <span>💖</span>
-        </span>
-      </button>
-
-
-      
-      <button 
-        (click)="goToSimpleHeart()"
-        class="action-button simple-heart-button"
-      >
-        <div class="button-glow"></div>
-        
-        <span class="button-content">
-          <span>Trái Tim Đơn Giản</span>
-          <span>❤️</span>
-        </span>
-      </button>
-
-      <button 
-        (click)="goToHeartNL()"
-        class="action-button heart-nl-button"
-      >
-        <div class="button-glow"></div>
-        
-        <span class="button-content">
-          <span>Trái Tim Động</span>
-          <span>💖</span>
-        </span>
-      </button>
-
-      <button 
+    <!-- <button 
         (click)="goToHeartTVNL()"
         class="action-button heart-tv-nl-button"
       >
@@ -101,12 +58,8 @@
           <span>Trái Tim TV NL</span>
           <span>💕</span>
         </span>
-      </button>
-      
-      <!-- Button description -->
-      <p class="button-description">
-        Nhấn để nhận lời chúc đặc biệt hoặc xem trái tim ✨
-      </p>
+      </button> -->
+     
     </div>
 
     <!-- Footer -->
@@ -119,18 +72,18 @@
 
   <!-- Message Popup -->
   <app-message-popup 
-    [isVisible]="showPopup"
+    [isVisible]="showPopup" 
     (closePopup)="closeMessagePopup()"
-  ></app-message-popup>
+    (openHeartTVNLModal)="showHeartTVNLModalPopup()">
+  </app-message-popup>
 </div>
 
-<!-- Heart Modal -->
-<div class="heart-modal-overlay" *ngIf="showHeartModal" (click)="closeHeartModal()">
-  <div class="heart-modal-content" (click)="$event.stopPropagation()">
-    <app-heart-page 
-      [isModal]="true"
-      (closeModal)="closeHeartModal()"
-    ></app-heart-page>
+
+<!-- Heart TV NL Modal Fullscreen -->
+<div class="heart-tv-nl-modal-overlay" *ngIf="showHeartTVNLModal" (click)="closeHeartTVNLModal()">
+  <div class="heart-tv-nl-modal-content" (click)="$event.stopPropagation()">
+    <app-heart-animation-tv-nl [isModal]="true" (closeModal)="closeHeartTVNLModal()">
+    </app-heart-animation-tv-nl>
   </div>
 </div>
 

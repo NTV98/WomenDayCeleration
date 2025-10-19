@@ -27,6 +27,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class MessagePopupComponent implements OnInit, OnDestroy {
   @Input() isVisible: boolean = false;
   @Output() closePopup = new EventEmitter<void>();
+  @Output() openHeartTVNLModal = new EventEmitter<void>();
 
   constructor(private router: Router) {}
 
@@ -168,14 +169,12 @@ export class MessagePopupComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Chuyển đến trang heart khi nhấn nút cuối
+   * Mở modal heart-animation-tv-nl khi nhấn nút cuối
    */
   goToHeartPage() {
     this.stopAutoSlide();
     this.isVisible = false;
-    setTimeout(() => {
-      this.router.navigate(['/heart']);
-    }, 300);
+    this.openHeartTVNLModal.emit();
   }
 
   /**

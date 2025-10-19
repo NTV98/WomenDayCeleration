@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
-import { HeartAnimationComponent } from './components/heart-animation/heart-animation';
 import { MessagePopupComponent } from './components/message-popup/message-popup';
-import { HeartPageComponent } from './components/heart-page/heart-page';
+import { HeartAnimationTvNlComponent } from './components/heart-animation-tv-nl/heart-animation-tv-nl.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterModule, HeartAnimationComponent, MessagePopupComponent, HeartPageComponent],
+  imports: [CommonModule, RouterModule, MessagePopupComponent, HeartAnimationTvNlComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
   animations: [
@@ -41,7 +40,7 @@ export class App implements OnInit {
   protected readonly title = signal('women-day-celebration');
   
   showPopup: boolean = false;
-  showHeartModal: boolean = false;
+  showHeartTVNLModal: boolean = false;
   isContentVisible: boolean = false;
 
   constructor(private router: Router) {}
@@ -67,18 +66,19 @@ export class App implements OnInit {
     this.showPopup = false;
   }
 
+  
   /**
-   * Hiển thị heart modal
+   * Hiển thị heart TV NL modal fullscreen
    */
-  showHeartModalPopup() {
-    this.showHeartModal = true;
+  showHeartTVNLModalPopup() {
+    this.showHeartTVNLModal = true;
   }
 
   /**
-   * Đóng heart modal
+   * Đóng heart TV NL modal
    */
-  closeHeartModal() {
-    this.showHeartModal = false;
+  closeHeartTVNLModal() {
+    this.showHeartTVNLModal = false;
   }
 
   /**

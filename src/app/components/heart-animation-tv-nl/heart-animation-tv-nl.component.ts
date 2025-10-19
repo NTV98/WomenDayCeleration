@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 })
 export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('heartCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  @Input() isModal: boolean = false;
+  @Output() closeModal = new EventEmitter<void>();
   
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
@@ -25,7 +27,9 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnInit() {
     this.startTextAnimation();
-    this.forceFullscreen();
+    if (!this.isModal) {
+      this.forceFullscreen();
+    }
   }
 
   /**
@@ -52,6 +56,18 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
   }
 
+  /**
+   * Restore scrollbars khi component bị destroy
+   */
+  private restoreScrollbars() {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.margin = '';
+    document.body.style.padding = '';
+    document.documentElement.style.margin = '';
+    document.documentElement.style.padding = '';
+  }
+
   ngAfterViewInit() {
     this.initCanvas();
     this.createParticles();
@@ -73,7 +89,10 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnDestroy() {
     if (this.animationId) {
-    cancelAnimationFrame(this.animationId);
+      cancelAnimationFrame(this.animationId);
+    }
+    if (!this.isModal) {
+      this.restoreScrollbars();
     }
   }
 
@@ -374,10 +393,14 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
   }
 
   /**
-   * Quay lại trang chủ
+   * Quay lại trang chủ hoặc đóng modal
    */
   goBack() {
-    this.router.navigate(['/home']);
+    if (this.isModal) {
+      this.closeModal.emit();
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 }
 
