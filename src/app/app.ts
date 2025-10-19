@@ -101,4 +101,11 @@ export class App implements OnInit {
   goToSimpleHeart() {
     this.router.navigate(['/simple-heart']);
   }
+
+  /**
+   * Điều hướng đến trang trái tim động NL
+   */
+  goToHeartNL() {
+    this.router.navigate(['/heart-nl']);
+  }
 }

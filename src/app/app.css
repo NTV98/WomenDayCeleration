@@ -90,3 +90,17 @@
 .simple-heart-button .button-glow {
   background: linear-gradient(135deg, rgba(255, 20, 147, 0.3), rgba(255, 105, 180, 0.3));
 }
+
+.heart-nl-button {
+  background: linear-gradient(135deg, #ff69b4, #ff1493, #dc143c);
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+}
+
+.heart-nl-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 105, 180, 0.6);
+}
+
+.heart-nl-button .button-glow {
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(255, 20, 147, 0.3));
+}
