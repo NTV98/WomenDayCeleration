@@ -69,20 +69,30 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit called, isModal:', this.isModal);
+    
     this.initCanvas();
     this.createParticles();
     this.startAnimation();
     
     // Force resize after a short delay to ensure DOM is ready
     setTimeout(() => {
-    this.resizeCanvas();
+      console.log('Resizing canvas after delay...');
+      this.resizeCanvas();
     }, 100);
+    
+    // Additional resize for mobile
+    setTimeout(() => {
+      console.log('Additional resize for mobile...');
+      this.resizeCanvas();
+    }, 500);
     
     // Hide loading animation
     setTimeout(() => {
       const container = document.querySelector('.heart-animation-container');
       if (container) {
         container.classList.add('loaded');
+        console.log('Loading animation hidden');
       }
     }, 1000);
   }
@@ -100,12 +110,28 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
    * Khởi tạo Canvas
    */
   private initCanvas() {
+    console.log('Initializing canvas...');
     this.canvas = this.canvasRef.nativeElement;
     this.ctx = this.canvas.getContext('2d')!;
     
+    if (!this.ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+    
+    console.log('Canvas initialized:', {
+      canvas: this.canvas,
+      ctx: this.ctx,
+      canvasWidth: this.canvas.width,
+      canvasHeight: this.canvas.height
+    });
+    
     // Set canvas size
     this.resizeCanvas();
-    window.addEventListener('resize', () => this.resizeCanvas());
+    window.addEventListener('resize', () => {
+      console.log('Window resized, resizing canvas...');
+      this.resizeCanvas();
+    });
   }
 
   /**
@@ -117,18 +143,34 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     const height = window.innerHeight;
     const dpr = window.devicePixelRatio || 1;
     
-    // Set canvas size
+    // Set canvas size với device pixel ratio
     this.canvas.width = width * dpr;
     this.canvas.height = height * dpr;
     
-    // Scale context
+    // Scale context để đảm bảo sharp rendering
     this.ctx.scale(dpr, dpr);
     
     // Set CSS size để đảm bảo canvas phủ toàn bộ viewport
     this.canvas.style.width = width + 'px';
     this.canvas.style.height = height + 'px';
     
-    console.log('Canvas resized:', { width, height, dpr, canvasWidth: this.canvas.width, canvasHeight: this.canvas.height });
+    // Force canvas to be visible
+    this.canvas.style.display = 'block';
+    this.canvas.style.position = 'absolute';
+    this.canvas.style.top = '0';
+    this.canvas.style.left = '0';
+    this.canvas.style.zIndex = '1';
+    
+    console.log('Canvas resized:', { 
+      width, 
+      height, 
+      dpr, 
+      canvasWidth: this.canvas.width, 
+      canvasHeight: this.canvas.height,
+      canvasStyleWidth: this.canvas.style.width,
+      canvasStyleHeight: this.canvas.style.height,
+      isModal: this.isModal
+    });
   }
 
   /**
@@ -187,11 +229,24 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     // Clear canvas với background gradient
     this.drawBackground();
 
+    // Sử dụng CSS dimensions thay vì canvas dimensions để tính toán
+    const canvasWidth = this.canvas.width / (window.devicePixelRatio || 1);
+    const canvasHeight = this.canvas.height / (window.devicePixelRatio || 1);
+    
     // Căn trái tim chính giữa màn hình
-    const centerX = this.canvas.width / 2;
-    const centerY = this.canvas.height / 2;
+    const centerX = canvasWidth / 2;
+    const centerY = canvasHeight / 2;
     // Tăng kích thước trái tim để chữ có thể nằm bên trong
-    const heartSize = Math.min(this.canvas.width, this.canvas.height) * 0.35;
+    const heartSize = Math.min(canvasWidth, canvasHeight) * 0.35;
+
+    console.log('Drawing heart:', { 
+      canvasWidth, 
+      canvasHeight, 
+      centerX, 
+      centerY, 
+      heartSize,
+      isModal: this.isModal 
+    });
 
     // Vẽ glow layers
     this.drawGlowLayers(centerX, centerY, heartSize);
@@ -214,6 +269,9 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     const canvasWidth = this.canvas.width / (window.devicePixelRatio || 1);
     const canvasHeight = this.canvas.height / (window.devicePixelRatio || 1);
     
+    // Clear canvas trước
+    this.ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    
     const gradient = this.ctx.createRadialGradient(
       canvasWidth / 2, canvasHeight / 2, 0,
       canvasWidth / 2, canvasHeight / 2, Math.max(canvasWidth, canvasHeight)
@@ -225,6 +283,8 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     
     this.ctx.fillStyle = gradient;
     this.ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    
+    console.log('Background drawn:', { canvasWidth, canvasHeight });
   }
 
   /**
@@ -302,7 +362,7 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     this.ctx.fillStyle = gradient;
     this.ctx.fill();
     
-    // Thêm multiple glow effects
+    // Thêm multiple glow effects với shadowBlur reset
     this.ctx.shadowColor = '#ff69b4';
     this.ctx.shadowBlur = 30;
     this.ctx.fill();
@@ -314,6 +374,12 @@ export class HeartAnimationTvNlComponent implements OnInit, AfterViewInit, OnDes
     this.ctx.shadowColor = '#dc143c';
     this.ctx.shadowBlur = 15;
     this.ctx.fill();
+    
+    // Reset shadow để tránh ảnh hưởng đến các element khác
+    this.ctx.shadowColor = 'transparent';
+    this.ctx.shadowBlur = 0;
+    
+    console.log('Heart drawn at:', { centerX, centerY, scaledSize });
     
     this.ctx.restore();
   }

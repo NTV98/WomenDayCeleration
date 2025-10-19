@@ -43,16 +43,37 @@
   width: 100vw !important;
   height: 100vh !important;
   cursor: crosshair;
-  display: block;
+  display: block !important;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  z-index: 1;
 }
 
 /* Modal mode canvas styling */
 .heart-animation-container.modal-mode .heart-canvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Mobile specific canvas fixes */
+@media (max-width: 768px) {
+  .heart-canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block !important;
+  }
+  
+  .heart-animation-container.modal-mode .heart-canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
 }
 
 /* Back button */
